@@ -7,13 +7,13 @@ const importMediaFiles = require('./utils/importMediaFiles');
 const queues = {};
 
 const importNextItem = async importConfig => {
-  const sourceItem = queues[importConfig.id].shift();
+  const sourceItem = queues[importConfig._id].shift();
   if (!sourceItem) {
     console.log('import complete');
 
     await strapi
       .query('importconfig', 'import-content')
-      .update({ id: importConfig.id }, { ongoing: false });
+      .update({ id: importConfig._id }, { ongoing: false });
 
     return;
   }
@@ -22,10 +22,11 @@ const importNextItem = async importConfig => {
     sourceItem,
     importConfig.fieldMapping
   );
-
-  const savedContent = await strapi.models[importConfig.contentType]
-    .forge(importedItem)
-    .save();
+  console.log();
+  console.log(importedItem);
+  const savedContent = strapi.models['core_store'].orm === 'mongoose'
+    ? await strapi.models[importConfig.contentType].create(importedItem)
+    : await strapi.models[importConfig.contentType].forge(importedItem).save();
 
   const uploadedFiles = await importMediaFiles(
     savedContent,
@@ -35,8 +36,8 @@ const importNextItem = async importConfig => {
   const fileIds = _.map(_.flatten(uploadedFiles), 'id');
 
   await strapi.query('importeditem', 'import-content').create({
-    importconfig: importConfig.id,
-    ContentId: savedContent.id,
+    importconfig: importConfig._id,
+    ContentId: savedContent._id,
     ContentType: importConfig.contentType,
     importedFiles: { fileIds }
   });
@@ -48,7 +49,7 @@ const importNextItem = async importConfig => {
 module.exports = {
   importItems: (importConfig, { contentType, body }) =>
     new Promise(async (resolve, reject) => {
-      const importConfigRecord = importConfig.attributes;
+      const importConfigRecord = importConfig;
       console.log('importitems', importConfigRecord);
 
       try {

@@ -27,7 +27,7 @@ module.exports = {
       .create(importConfig);
 
     ctx.send(record);
-
+    console.log(record);
     const { contentType, body } = await resolveFileDataFromRequest(ctx);
 
     services['importitems'].importItems(record, { contentType, body });

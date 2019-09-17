@@ -8,7 +8,7 @@ const resetOngoingImports = async () => {
   const resetImportsPromises = entries.map(importConfig =>
     strapi
       .query('importconfig', 'import-content')
-      .update({ id: importConfig.id }, { ongoing: false })
+      .update({ id: importConfig._id }, { ongoing: false })
   );
 
   return await Promise.all(resetImportsPromises);

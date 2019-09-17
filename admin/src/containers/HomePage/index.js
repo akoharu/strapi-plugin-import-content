@@ -97,12 +97,12 @@ export class HomePage extends Component {
                               ? { icoType: 'spinner' }
                               : {
                                 icoType: 'undo',
-                                onClick: this.undoImport(item.id)
+                                onClick: this.undoImport(item._id)
                               }
                           ],
                           {
                             icoType: 'trash',
-                            onClick: this.deleteImport(item.id)
+                            onClick: this.deleteImport(item._id)
                           }
                         ]}
                       />

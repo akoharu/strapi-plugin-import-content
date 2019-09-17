@@ -2,8 +2,7 @@
   "connection": "default",
   "info": {
     "name": "importeditem",
-    "description":
-      "A record of an item that has been imported with a given ImportConfig"
+    "description": "A record of an item that has been imported with a given ImportConfig"
   },
   "options": {
     "increments": true,
@@ -15,7 +14,7 @@
       "type": "string"
     },
     "ContentId": {
-      "type": "integer"
+      "type": "string"
     },
     "importconfig": {
       "model": "importconfig",
