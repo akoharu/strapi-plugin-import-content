@@ -5,12 +5,13 @@ const TargetFieldSelect = ({ targetModel, onChange }) => (
     <option value="none">(none)</option>
     {targetModel &&
       targetModel.attributes.map(attribute => {
-        const type = attribute.params.type;
-        return type ? (
-          <option value={attribute.name}>
-            {attribute.name} ({type})
-          </option>
-        ) : null;
+        return <option value={attribute.name}>{attribute.name} </option>;
+        // const type = attribute.params.type;
+        // return type ? (
+        //   <option value={attribute.name}>
+        //     {attribute.name} ({type})
+        //   </option>
+        // ) : null;
       })}
   </select>
 );
