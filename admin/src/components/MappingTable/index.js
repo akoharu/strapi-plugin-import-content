@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import MappingOptions from './MappingOptions';
 import TargetFieldSelect from './TargetFieldSelect';
 import _ from 'lodash';
-
 class MappingTable extends Component {
   state = { mapping: {} };
 
@@ -32,7 +31,7 @@ class MappingTable extends Component {
       <div className="row">
         <div className="col-md-12">
           <div>Found {analysis.itemCount} items...</div>
-          <table>
+          <table className="table table-hover">
             <tr>
               <th>Field Name</th>
               <th>Count</th>
